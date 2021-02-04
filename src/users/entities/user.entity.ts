@@ -1,17 +1,27 @@
+import { Field, InputType, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { fieldToFieldConfig } from "graphql-tools";
 import { CoreEntity } from "src/common/entities/core.entity";
 import { Column, Entity } from "typeorm";
 
 
-type userrole='player'|'trainer'|'countManager';
+enum UserRole{player,trainer,countManager};
+
+registerEnumType(UserRole,{name:"UserRole"});
+
+@InputType({isAbstract:true})
+@ObjectType()
 @Entity()
 export class User extends CoreEntity
 {
     @Column()
+    @Field(type=>String)
     email:string;
 
     @Column()
+    @Field(type=>String)
     password:string;
 
-    @Column()
-    role:userrole;
+    @Column({type:'enum',enum:UserRole})
+    @Field(type=>UserRole)
+    role:UserRole;
 }
