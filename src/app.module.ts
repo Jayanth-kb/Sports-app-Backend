@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { Restaurant } from './restaurants/entities/restaurant.entity';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
         DB_PASSWORD:joi.string().required(),
         DB_NAME:joi.string().required(),
       })
-    }),RestaurantsModule,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -31,11 +33,11 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
       database: process.env.DB_NAME,
       synchronize: true,
       logging: true,
-      entities:[Restaurant]
+      entities:[User],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true
-    }),],
+    }),UsersModule],
   controllers: [],
   providers: [],
 })
