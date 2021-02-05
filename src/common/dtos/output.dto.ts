@@ -7,5 +7,5 @@ export class Mutationoutput
     error?:string;
 
     @Field(type=>Boolean)
-    ok:boolean;
+    ok:boolean; 
 }
