@@ -1,20 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { createRestaurantDto } from "./dtos/create-restaurant.dto";
-import { Restaurant } from "./entities/restaurant.entity";
+import { createCountDto } from "./dtos/create-restaurant.dto";
+import { Count } from "./entities/restaurant.entity";
 
 @Injectable()
 export class RestaurantService{
-    constructor(@InjectRepository(Restaurant)
-    private readonly restaurants:Repository<Restaurant>){
+    constructor(@InjectRepository(Count)
+    private readonly Counts:Repository<Count>){
          
     }
-    getALL():Promise<Restaurant[]> {
-        return this.restaurants.find(); 
+    getALL():Promise<Count[]> {
+        return this.Counts.find(); 
     }
-    createRestaurant (createRestaurantDto:createRestaurantDto): Promise<Restaurant> {
-        const newRestaurant = this.restaurants.create(createRestaurantDto);
-        return this.restaurants.save(newRestaurant);
+    createCounts (createCountDto:createCountDto): Promise<Count> {
+        const newCount = this.Counts.create(createCountDto);
+        return this.Counts.save(newCount);
     }
 }

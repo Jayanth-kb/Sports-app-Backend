@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @ObjectType()
 @Entity()
-export class Restaurant {
+export class Count{
 
     @Field(type=>Number)
     @PrimaryGeneratedColumn()
