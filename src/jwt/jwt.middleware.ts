@@ -1,27 +1,25 @@
-import { Injectable, NestMiddleware } from "@nestjs/common";
-import { NextFunction, Request, Response } from "express";
-import { UsersService } from "src/users/users.service";
-import { JwtService } from "./jwt.service";
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { NextFunction, Request, Response } from 'express';
+import { UsersService } from 'src/users/users.service';
+import { JwtService } from './jwt.service';
 
 @Injectable()
-export class JwtMiddleware implements NestMiddleware{
-    constructor(
-      private readonly jwtService:JwtService,
-      private readonly userservice:UsersService){}
-    async use(req:Request,res:Response,next:NextFunction){
-        if('x-jwt' in req.headers){
-          const token=req.headers['x-jwt'];
-          const decoded=this.jwtService.verfiy(token.toString());
-          if(typeof decoded==='object' && decoded.hasOwnProperty('id'))
-          {
-              try {
-                const user= await this.userservice.findById(decoded['id']);
-                req['user']=user;
-              } catch (e) {
-                
-              }
-          }
+export class JwtMiddleware implements NestMiddleware {
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly userservice: UsersService,
+  ) {}
+  async use(req: Request, res: Response, next: NextFunction) {
+    if ('x-jwt' in req.headers) {
+      const token = req.headers['x-jwt'];
+      try {
+        const decoded = this.jwtService.verfiy(token.toString());
+        if (typeof decoded === 'object' && decoded.hasOwnProperty('id')) {
+          const user = await this.userservice.findById(decoded['id']);
+          req['user'] = user;
         }
-        next()
+      } catch (e) {}
     }
+    next();
+  }
 }
