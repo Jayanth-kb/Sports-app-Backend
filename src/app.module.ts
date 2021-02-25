@@ -8,6 +8,7 @@ import { join } from 'path';
 import { Count } from './restaurants/entities/restaurant.entity';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
+import { JwtModule } from './jwt/jwt.module';
 
 
 @Module({
@@ -23,7 +24,7 @@ import { User } from './users/entities/user.entity';
         DB_USERNAME:joi.string().required(),
         DB_PASSWORD:joi.string().required(),
         DB_NAME:joi.string().required(),
-        SECRET_KEY:joi.string().required(),
+        PRIVATE_KEY:joi.string().required(),
       })
     }),
     TypeOrmModule.forRoot({
@@ -39,7 +40,7 @@ import { User } from './users/entities/user.entity';
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true
-    }),UsersModule,RestaurantsModule],
+    }),UsersModule, RestaurantsModule, JwtModule.forRoot({privateKey:process.env.PRIVATE_KEY},)],
   controllers: [],
   providers: [],
 })
