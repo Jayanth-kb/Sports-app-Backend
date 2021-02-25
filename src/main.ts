@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationContext } from 'graphql';
 import { applySchemaTransforms } from 'graphql-tools';
 import { AppModule } from './app.module';
+import { JwtMiddleware } from './jwt/jwt.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
